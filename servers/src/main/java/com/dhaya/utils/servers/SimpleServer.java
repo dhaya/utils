@@ -7,6 +7,7 @@ import org.eclipse.jetty.server.ServerConnector;
 
 import java.util.concurrent.Executor;
 
+// 250K qps using:  wrk -t12 -c400 -d30s http://localhost:8080
 public class SimpleServer {
     public static void main(String[] args) throws Exception {
         SimpleServer ss = new SimpleServer();
@@ -28,7 +29,9 @@ public class SimpleServer {
     }
 
     private ServerConnector getConnector(Server server) {
-        Executor executor = ExecutorFactory.newForkJoinPoolExecutor(240);
+        // Empirically seem to get throughput when the number of threads
+        // is 2 * number of hyperthreaded cores.
+        Executor executor = ExecutorFactory.newForkJoinPoolExecutor(16);
         ServerConnector connector = new ServerConnector(server, executor, null,null,-1,-1,new HttpConnectionFactory());
         connector.setPort(8080);
         connector.setAcceptQueueSize(100);

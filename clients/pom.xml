@@ -9,8 +9,20 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <properties>
+        <armeria.version>0.43.0</armeria.version>
+    </properties>
+
     <groupId>com.dhaya.utils</groupId>
     <artifactId>clients</artifactId>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>com.linecorp.armeria</groupId>
+            <artifactId>armeria</artifactId>
+            <version>${armeria.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
